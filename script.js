@@ -26,15 +26,17 @@ $(document).ready(() => {
 
     updatePager();
 
-    const menuLinks = document.querySelectorAll('menu__link');
+    const menuLinks = document.querySelectorAll(".scroll-to");
+    console.log(menuLinks)
     menuLinks.forEach(link => {
         link.addEventListener('click', (e) => {
+            console.log(link)
             e.preventDefault();
-            const sectionId = this.getAttribute('href'); 
-
+            const sectionId = e.target.getAttribute('href'); 
+            console.log(sectionId)
             $('html, body').animate({ 
-                scrollTop: $(sectionId).offset().top }, 
-                1000
+                scrollTop: $(sectionId).offset().top-50 }, 
+                500
             )
         });
     });
