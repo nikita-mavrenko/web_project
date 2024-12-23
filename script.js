@@ -104,11 +104,7 @@ $(document).ready(() => {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                responseMessage.textContent = 'Спасибо за ваше сообщение!';
-            } else {
-                responseMessage.textContent = 'Произошла ошибка. Пожалуйста, попробуйте еще раз.';
-            }
+            responseMessage.textContent = 'Спасибо за ваше сообщение!';
             feedbackForm.reset();
             clearFormData();
         })
