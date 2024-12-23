@@ -901,6 +901,10 @@ footer {
     width: 50px;
 }
 
+.responseMessage{
+    margin-top: 15px;
+}
+
 @media (max-width:1000px) {
     .menu__list {
         gap: 10px;
