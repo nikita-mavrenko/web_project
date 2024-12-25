@@ -818,6 +818,33 @@ footer {
     color: #fff !important;
 }
 
+article:hover {
+    scale: 1.05;
+}
+
+.case__btn{
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+    color: #050C33;
+    border-color: rgb(5, 12, 51, 0.2);
+    letter-spacing: 1px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border-width: 0.5px;
+    background-color: transparent;
+    padding: 20px 60px;
+}
+.case__btn:hover {
+    scale: 1.1;
+}
+
+.case__btn-cntr{
+    text-align: center;
+    margin-bottom: 200px;
+}
+
 .blog.keys-2 {
     width: 66.66666667%;
     padding: 0 10px;
@@ -905,6 +932,24 @@ footer {
     margin-top: 15px;
 }
 
+.first {
+    font-size: 48px;
+    font-weight: bold;
+    position: relative;
+    display: flex;
+    margin-bottom: -5px;
+}
+
+.first::after {
+    content: "";
+    position: relative;
+    background-image: url("img/cup.svg");
+    display: block;
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+}
+
 @media (max-width:1000px) {
     .menu__list {
         gap: 10px;
@@ -963,6 +1008,8 @@ footer {
     .review__slider{
         flex-direction: column;
     }
+
+
     .pager {
         font-size: 20px;
     }
