@@ -696,12 +696,17 @@ footer {
     flex-shrink: 1;
 }
 
+.error {
+    color:#F14D34;
+}
+
 .form {
     display: flex;
     flex-direction: column;
 }
 
 .form__button {
+    margin-top: 10px;
     cursor: pointer;
     text-transform: uppercase;
     background-color: #F14D34;
@@ -713,6 +718,10 @@ footer {
     border-color: transparent;
     border-radius: 5px;
     display: block;
+}
+
+.field {
+    margin-top: 10px;
 }
 
 .form__button:hover {
@@ -1155,4 +1164,61 @@ article:hover {
     .expertise__content {
         margin-left: 0;
     }
+}
+
+.mess {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+.mess.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.mess.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.error[data-field] {
+    font-size: 12px;
+    margin-top: -8px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.input-login {
+    color: #040613;
+}
+
+.login-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.btnlike {
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #F14D34;
+    color: white;
+    font-size: 12px;
+    padding: 20px 0px;
+    width: 100%;
+    border-width: 2px;
+    border-color: transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    /* Убираем подчеркивание ссылки */
+    transition: 0.3s;
+    margin-bottom: 10px;
+    /* Добавляем отступ, если нужно */
 }

@@ -75,6 +75,17 @@ $(document).ready(() => {
         };
         localStorage.setItem('feedbackFormData', JSON.stringify(formData));
     }
+    function updateFormButtons(isLoggedIn) {
+        const submitBtn = document.querySelector('.submit-btn');
+        const btnlike = document.querySelector('.btnlike');
+        const edbut = document.querySelector('.edbut');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        if (submitBtn) submitBtn.style.display = isLoggedIn ? 'none' : 'inline-block';
+        if (btnlike) btnlike.style.display = isLoggedIn ? 'none' : 'inline-block';
+        if (edbut) edbut.style.display = isLoggedIn ? 'inline-block' : 'none';
+        if (logoutBtn) logoutBtn.style.display = isLoggedIn ? 'inline-block' : 'none';
+    }
 
     function loadFormData() {
         const savedData = localStorage.getItem('feedbackFormData');
@@ -92,26 +103,81 @@ $(document).ready(() => {
     const responseMessage = document.getElementById('responseMessage');
 
 
-    feedbackForm.onsubmit = (event) => {
+    feedbackForm.onsubmit = async (event) => {
         event.preventDefault();
+        console.log("sending form")
         const formData = new FormData(feedbackForm);
-        fetch('https://formcarry.com/s/xCAxz_RE3dU', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
+        const submitButton = document.querySelector('button[type="submit"]:focus');
+        if (submitButton && submitButton.name === 'action') {
+            formData.append(submitButton.name, submitButton.value);
+        }
+        const action = formData.get('action');
+        
+        // Сбрасываем сообщения
+        document.querySelectorAll('.mess').forEach(el => {
+            el.textContent = '';
+            el.style.display = 'none';
+        });
+        
+        try {
+            const response = await fetch('index.php', {
+                method: 'POST',
+                body: formData,
+                headers: {'X-Requested-With': 'XMLHttpRequest'}
+            });
+    
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+            const data = await response.json();
+
+            console.log(data)
+
+            if (data.logout) {
+                window.location.href = 'index.php'; // Перезагружаем страницу после выхода
+                return;
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            responseMessage.textContent = 'Спасибо за ваше сообщение!';
-            feedbackForm.reset();
-            clearFormData();
-        })
+        
+            const messElement = document.querySelector('.mess');
+            if (data.messages?.success && messElement) {
+                messElement.textContent = data.messages.success;
+                messElement.style.display = 'block';
+            }
+
+            if (!data.messages?.success && messElement) {
+                messElement.textContent = data.messages.success;
+                messElement.style.display = 'block';
+
+            }
+            
+            const messInfo = document.querySelector('.mess_info');
+
+            if (data.messages?.info && messInfo) {
+                messInfo.innerHTML = data.messages.info;
+                messInfo.style.display = 'block';
+            }
+            
+            if (data.errors && data.messages) {
+                for (const field in data.errors) {
+                    const errorElement = document.querySelector(`.error[data-field="${field}"]`);
+                    if (errorElement && data.messages[field]) {
+                        errorElement.textContent = data.messages[field];
+                    }
+                } 
+            }
+            
+            if (data.log) {
+                updateFormButtons(data.log);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            const messElement = document.querySelector('.mess');
+            if (messElement) {
+                messElement.textContent = 'Ошибка при отправке формы';
+                messElement.style.display = 'block';
+            }
+        }
     }
-    function clearFormData() {
-        localStorage.removeItem('feedbackFormData');
-    }
+
 
     loadFormData();
 })
